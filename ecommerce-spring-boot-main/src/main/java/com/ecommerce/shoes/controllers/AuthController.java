@@ -13,10 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import com.ecommerce.shoes.entities.Contact;
 import com.ecommerce.shoes.entities.User;
@@ -149,6 +146,12 @@ public class AuthController {
 		model.addAttribute("message", "Loading product failed");
         return "adminError";
 	}
+
+	@PostMapping("/deleteUser")
+	public String deleteUser(@RequestParam Long id){
+		authService.deleteUser(id);
+		return "redirect:/all_users";
+	}
 	
 	@PostMapping(path="/search_username", consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public String getUserByUsername(@RequestParam MultiValueMap<String, String> userCredentials, Model model) {
@@ -174,6 +177,45 @@ public class AuthController {
 		
 		model.addAttribute("message", "User search failed");
         return "adminError";
+	}
+
+	// Show add/edit user form
+	@GetMapping("/addUser")
+	public String showAddUserForm(Model model) {
+		model.addAttribute("user", new User()); // Provide a new User object for adding
+		model.addAttribute("title", "Add New User");
+		model.addAttribute("actionText", "Add User");
+		return "editUser";
+	}
+
+	@GetMapping(path = "/editUser")
+	public String showEditUserForm(@RequestParam("id") Long id, Model model) {
+		User user = authService.findById(id);
+		if (user == null) {
+			return "redirect:/userList?error";
+		}
+		model.addAttribute("user", user);
+		model.addAttribute("title", "Edit User");
+		model.addAttribute("actionText", "Update User");
+		return "editUser";
+	}
+
+	@PostMapping(path = "/saveUser")
+	public String saveUser(@RequestParam("id") Long id,
+						   @RequestParam("username") String username,
+						   @RequestParam("password") String password,
+						   @RequestParam("firstName") String firstName,
+						   @RequestParam("lastName") String lastName) {
+		User user = (id != null && id > 0) ? authService.findById(id) : new User();
+		if (user == null) {
+			return "redirect:/all_users?error";
+		}
+		user.setUsername(username);
+		user.setPassword(password);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		authService.saveUser(user);
+		return "redirect:/all_users";
 	}
 
 }

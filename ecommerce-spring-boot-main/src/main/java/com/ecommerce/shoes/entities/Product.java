@@ -3,14 +3,7 @@ package com.ecommerce.shoes.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Product {
@@ -29,7 +22,7 @@ public class Product {
 	@ManyToOne
 	private ProductLine productLine;
 	
-	@OneToMany(mappedBy="product" /*, fetch=FetchType.EAGER*/)
+	@OneToMany(mappedBy="product",cascade = CascadeType.ALL)
 	private List<ProductOrder> orders = new ArrayList<>();
 
 	public Product() {

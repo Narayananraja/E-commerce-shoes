@@ -26,7 +26,24 @@ public class ProductService {
 		
 		return allProducts;
 	}
-	
+
+	public Product getProductById(Long id) {
+		return productRepository.findById(id).orElse(null);
+	}
+
+	public void updateProduct(Product product) {
+		productRepository.save(product);
+	}
+
+	public void deleteProduct(Long id) {
+		productRepository.deleteById(id);
+	}
+
+
+
+
+
+
 	public List<Product> getAllProductsFromProductLine(Long productLineId) {
 		
 		List<Product> products = productRepository.findByProductLineId(productLineId);
@@ -45,6 +62,19 @@ public class ProductService {
 		}
 		
 		return null;
+	}
+
+	public Product findProductById(Long id) {
+		Optional<Product> optionalProduct = productRepository.findById(id);
+		return optionalProduct.orElse(null);
+	}
+
+	public void saveProduct(Product product) {
+		productRepository.save(product);
+	}
+
+	public List<Product> findAllProducts() {
+		return productRepository.findAll();
 	}
 
 }

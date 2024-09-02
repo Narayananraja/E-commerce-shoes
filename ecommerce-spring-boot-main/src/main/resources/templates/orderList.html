@@ -1,45 +1,111 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Order List</title>
-<style type="text/css">
-	table {border: 0;}
-	table td {padding: 10px;}
-	table th {padding: 10px;}
-	input {width: 100px;}
-</style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Order List</title>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body {
+            background-color: #f5f5f5;
+        }
+        .body-container {
+            margin-top: 30px;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .table th {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+        }
+        .table td, .table th {
+            vertical-align: middle;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .search-form {
+            margin-bottom: 20px;
+        }
+        .search-form input, .search-form button {
+            max-width: 300px;
+        }
+        .search-form input {
+            margin-right: 10px;
+        }
+	</style>
 </head>
 <body>
-    <form action="filter_orders_category" method="post" align="center">
-		<h1>Order List</h1>
-		<hr/>
-		<input type="text" name="category" placeholder="category" />
-		<input type="submit" value="Search" />
-		<table align="center">
-			<tr>
-				<th>Order Id</th>
-				<th>Product Id</th>
-				<th>Product Line</th>
-				<th>Category</th>
-				<th>Amount</th>
-				<th>Asked Total</th>
-			</tr>
-			<tr th:each="order : ${orders}">
-				<td th:text="${order.id}" />
-				<td th:text="${order.product.id}" />
-				<td th:text="${order.product.productLine.name}" />
-				<td th:text="${order.product.productLine.category}" />
-				<td th:text="${order.amount}" />
-				<td th:text="${order.total}" />				
-			</tr>
-		</table>
-		<br/>
-		<a href="adminHome">Back</a> to admin page
-	</form>
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<header class="bg-primary text-white py-6">
+	<div class="container text-center">
+		<h1 class="display-12">Footwear Fusion</h1>
+	</div>
+</header>
+<div class="body-container">
+	<!-- Header Card -->
+	<div class="card">
+
+		<div class="card-body">
+			<!-- Search Form -->
+			<form action="filter_orders_category" method="post" class="search-form d-flex justify-content-center">
+				<input type="text" name="category" class="form-control form-control-lg" placeholder="Search by category" />
+				<button type="submit" class="btn btn-primary btn-lg">Search</button>
+			</form>
+
+			<!-- Orders Table -->
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered">
+					<thead>
+					<tr>
+						<th>Order Id</th>
+						<th>Product Id</th>
+						<th>Product Line</th>
+						<th>Category</th>
+						<th>Amount</th>
+						<th>Asked Total</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr th:each="order : ${orders}">
+						<td th:text="${order.id}"></td>
+						<td th:text="${order.product.id}"></td>
+						<td th:text="${order.product.productLine.name}"></td>
+						<td th:text="${order.product.productLine.category}"></td>
+						<td th:text="${order.amount}"></td>
+						<td th:text="${order.total}"></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<!-- Back Link -->
+	<div class="text-center mt-4">
+		<a href="adminHome" class="btn btn-secondary btn-lg">Back to Admin Page</a>
+	</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

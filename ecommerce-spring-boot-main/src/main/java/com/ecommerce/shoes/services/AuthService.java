@@ -12,6 +12,8 @@ import com.ecommerce.shoes.entities.User;
 import com.ecommerce.shoes.repositories.ContactRepository;
 import com.ecommerce.shoes.repositories.UserRepository;
 
+import javax.persistence.EntityNotFoundException;
+
 @Component
 public class AuthService {
 	
@@ -89,4 +91,19 @@ public class AuthService {
 		return foundUser;
 	}
 
+    public void deleteUser(Long id) {
+		if(userRepository.existsById(id)) {
+			userRepository.deleteById(id);
+		} else {
+			throw new EntityNotFoundException("User not found with id: " + id);
+		}
+    }
+
+	public User findById(Long id) {
+		return userRepository.getById(id);
+	}
+
+	public void saveUser(User user) {
+		userRepository.save(user);
+	}
 }

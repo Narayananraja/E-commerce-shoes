@@ -1,5 +1,6 @@
 package com.ecommerce.shoes.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -30,5 +31,14 @@ public class ProductLineService {
 		return null;
 		
 	}
+
+	public List<ProductLine> findAllProductLines() {
+		return productLineRepository.findAll();
+	}
+
+	public List<ProductLine> getAllProductLines() {
+		return productLineRepository.findAll();
+	}
+
 
 }
