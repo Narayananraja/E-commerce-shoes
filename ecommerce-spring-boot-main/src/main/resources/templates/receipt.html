@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<title>Payment Receipt</title>
+<style type="text/css">
+	table {border: 0;}
+	table td {padding: 10px;}
+	 body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .receipt-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .alert-success-custom {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        .btn-back {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
+</style>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+<header class="bg-primary text-white py-6">
+	<div class="container text-center">
+		<h1 class="display-12">Footwear Fusion</h1>
+	</div>
+</header>
+<div class="receipt-container text-center">
+	<!-- Success Message -->
+	<div class="alert alert-success alert-success-custom d-flex align-items-center" role="alert">
+		<i class="fas fa-check-circle fa-2x mr-3 text-success"></i>
+		<div>
+			<h4 class="alert-heading">Payment Completed!</h4>
+			<p>Your payment has been processed successfully. Thank you for your purchase!</p>
+		</div>
+	</div>
+
+	<hr class="my-4"/>
+	<h2 class="display-5">Receipt Details</h2>
+	<table class="table table-bordered table-striped mt-4">
+		<tbody>
+		<tr>
+			<td><strong>Merchant:</strong></td>
+			<td>SportyShoes Inc.</td>
+		</tr>
+		<tr>
+			<td><strong>Sub Total:</strong></td>
+			<td th:text="${transaction.amount.details.subtotal}"></td>
+		</tr>
+		<tr>
+			<td><strong>Shipping:</strong></td>
+			<td th:text="${transaction.amount.details.shipping}"></td>
+		</tr>
+		<tr>
+			<td><strong>Tax:</strong></td>
+			<td th:text="${transaction.amount.details.tax}"></td>
+		</tr>
+		<tr>
+			<td><strong>Total:</strong></td>
+			<td th:text="${transaction.amount.total}"></td>
+		</tr>
+		</tbody>
+	</table>
+	<a href="/shopHome" class="btn-back">Back to Shop Home</a>
+</div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

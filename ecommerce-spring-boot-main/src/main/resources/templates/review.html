@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<title>Review Payment</title>
+<style type="text/css">
+	table {border: 0;}
+	table td {padding: 10px;}
+	body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .form-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #007bff!important;;
+            color: #fff;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+            padding: 15px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-header i {
+            margin-right: 10px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .btn-pay-now {
+            background: linear-gradient(135deg, #007bff, #00d4ff);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        .btn-pay-now:hover {
+            background: linear-gradient(135deg, #00d4ff, #007bff);
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+</style>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+	<div align="center">
+
+<!--		<form action="execute_payment" method="post">-->
+<!--			<table>-->
+<!--				<tbody>-->
+<!--					<tr>-->
+<!--						<td colspan="2"><b>Transaction Details</b></td>-->
+<!--						<td>-->
+<!--							<input type="hidden" name="paymentId" th:value="${param.paymentId}" />-->
+<!--							<input type="hidden" name="PayerID" th:value="${param.PayerID}" />-->
+<!--							<input type="hidden" name="productOrderId" th:value="${order.id}" />-->
+<!--						</td>-->
+<!--					</tr>-->
+<!--					<tr>-->
+<!--						<td>Description:</td>-->
+<!--						<td th:text="${transaction.description}"></td>-->
+<!--					</tr>-->
+<!--					<tr>-->
+<!--						<td>Sub Total:</td>-->
+<!--						<td th:text="${transaction.amount.details.subtotal}"></td>-->
+<!--					</tr>-->
+<!--					<tr>-->
+<!--						<td>Shipping:</td>-->
+<!--						<td th:text="${transaction.amount.details.shipping}"></td>-->
+<!--					</tr>-->
+<!--					<tr>-->
+<!--						<td>Tax:</td>-->
+<!--						<td th:text="${transaction.amount.details.tax}"></td>-->
+<!--					</tr>-->
+<!--					<tr>-->
+<!--						<td>Total:</td>-->
+<!--						<td th:text="${transaction.amount.total}"></td>-->
+<!--					</tr>-->
+<!--					<tr><td><br/></td></tr>-->
+<!--					<tr>-->
+<!--						<td colspan="2"><b>Shipping Address</b></td>-->
+<!--						<td></td>-->
+<!--					</tr>-->
+<!--					<tr>-->
+<!--						<td>Recipient Name:</td>-->
+<!--						<td th:text="${shippingAddress.recipientName}"></td>-->
+<!--					</tr>-->
+<!--					<tr>-->
+<!--						<td>Line 1:</td>-->
+<!--						<td th:text="${shippingAddress.line1}"></td>-->
+<!--					</tr>-->
+<!--					<tr>-->
+<!--						<td>City:</td>-->
+<!--						<td th:text="${shippingAddress.city}"></td>-->
+<!--					</tr>-->
+<!--					<tr>-->
+<!--						<td>State:</td>-->
+<!--						<td th:text="${shippingAddress.state}"></td>-->
+<!--					</tr>-->
+<!--					<tr>-->
+<!--						<td>Country Code:</td>-->
+<!--						<td th:text="${shippingAddress.countryCode}"></td>-->
+<!--					</tr>-->
+<!--					<tr>-->
+<!--						<td>Postal Code:</td>-->
+<!--						<td th:text="${shippingAddress.postalCode}"></td>-->
+<!--					</tr>-->
+<!--					<tr>-->
+<!--						<td colspan="2" align="center">-->
+<!--							<input type="submit" value="Pay Now"/>-->
+<!--						</td>-->
+<!--					</tr>-->
+<!--				</tbody>-->
+<!--			</table>-->
+<!--		</form>-->
+		<header class="bg-primary text-white py-6">
+			<div class="container text-center">
+				<h1 class="display-12">Footwear Fusion</h1>
+			</div>
+		</header>
+		<div class="container">
+			<div class="form-container">
+				<form action="execute_payment" method="post">
+					<input type="hidden" name="paymentId" th:value="${param.paymentId}" />
+					<input type="hidden" name="PayerID" th:value="${param.PayerID}" />
+					<input type="hidden" name="productOrderId" th:value="${order.id}" />
+
+					<div class="row">
+						<!-- Transaction Details on the Left Side -->
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header">
+									<i class="fas fa-receipt"></i> Transaction Details
+								</div>
+								<div class="card-body">
+									<div class="form-group row">
+										<label for="description" class="col-sm-4 col-form-label">Description:</label>
+										<div class="col-sm-8">
+											<p id="description" class="form-control-plaintext" th:text="${transaction.description}"></p>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="subtotal" class="col-sm-4 col-form-label">Sub Total:</label>
+										<div class="col-sm-8">
+											<p id="subtotal" class="form-control-plaintext" th:text="${transaction.amount.details.subtotal}"></p>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="shipping" class="col-sm-4 col-form-label">Shipping:</label>
+										<div class="col-sm-8">
+											<p id="shipping" class="form-control-plaintext" th:text="${transaction.amount.details.shipping}"></p>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="tax" class="col-sm-4 col-form-label">Tax:</label>
+										<div class="col-sm-8">
+											<p id="tax" class="form-control-plaintext" th:text="${transaction.amount.details.tax}"></p>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="total" class="col-sm-4 col-form-label">Total:</label>
+										<div class="col-sm-8">
+											<p id="total" class="form-control-plaintext" th:text="${transaction.amount.total}"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Shipping Details on the Right Side -->
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header">
+									<i class="fas fa-shipping-fast"></i> Shipping Address
+								</div>
+								<div class="card-body">
+									<div class="form-group row">
+										<label for="recipientName" class="col-sm-4 col-form-label">Recipient Name:</label>
+										<div class="col-sm-8">
+											<p id="recipientName" class="form-control-plaintext" th:text="${shippingAddress.recipientName}"></p>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="line1" class="col-sm-4 col-form-label">Line 1:</label>
+										<div class="col-sm-8">
+											<p id="line1" class="form-control-plaintext" th:text="${shippingAddress.line1}"></p>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="city" class="col-sm-4 col-form-label">City:</label>
+										<div class="col-sm-8">
+											<p id="city" class="form-control-plaintext" th:text="${shippingAddress.city}"></p>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="state" class="col-sm-4 col-form-label">State:</label>
+										<div class="col-sm-8">
+											<p id="state" class="form-control-plaintext" th:text="${shippingAddress.state}"></p>
+										</div>
+									</div>
+
+<!--									<div class="form-group row">-->
+<!--										<label for="countryCode" class="col-sm-4 col-form-label">Country Code:</label>-->
+<!--										<div class="col-sm-8">-->
+<!--											<p id="countryCode" class="form-control-plaintext" th:text="${shippingAddress.countryCode}"></p>-->
+<!--										</div>-->
+<!--									</div>-->
+
+									<div class="form-group row">
+										<label for="postalCode" class="col-sm-4 col-form-label">Postal Code:</label>
+										<div class="col-sm-8">
+											<p id="postalCode" class="form-control-plaintext" th:text="${shippingAddress.postalCode}"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Pay Now Button at the Bottom Center -->
+					<div class="form-group text-center mt-4">
+						<button type="submit" class="btn btn-pay-now btn-xl">Pay Now</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+
+
+	</div>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

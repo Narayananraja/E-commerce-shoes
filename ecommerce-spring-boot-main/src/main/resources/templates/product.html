@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Product</title>
+<style type="text/css">
+	table {border: 0;}
+	table td {padding: 10px;}
+	table th {padding: 10px;}
+	input {width: 70px;}
+	 .form-container {
+            max-width: 500px; /* Set the max width of the form container */
+            margin: 50px auto; /* Center the form horizontally and add vertical spacing */
+            padding: 20px; /* Add padding inside the container */
+            background-color: #fff; /* Optional: Set a background color */
+            border-radius: 8px; /* Optional: Round the corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+        }
+        .header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn-buy {
+            margin-top: 20px;
+             display:inline-block;
+        }
+        .back-link {
+            margin-top: 30px;
+            text-align: center;
+        }
+	  .btn-container {
+            text-align: center; /* Center the button inside the form */
+        }
+</style>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<header class="bg-primary text-white py-6">
+	<div class="container text-center">
+		<h1 class="display-12">Footwear Fusion</h1>
+	</div>
+</header>
+<!--    <form action="buy_product" method="post" align="center">-->
+<!--		<h1 th:text="${productLine.name}"></h1>-->
+<!--		<hr/>-->
+<!--		<table align="center">-->
+<!--			<tr>-->
+<!--				<th></th>-->
+<!--				<th>Brand</th>-->
+<!--				<th>Price</th>-->
+<!--				<th>Size</th>-->
+<!--				<th>Amount</th>-->
+<!--				<th></th>-->
+<!--			</tr>-->
+<!--			<tr>-->
+<!--				<td>-->
+<!--					<input type="hidden" name="price" th:value="${productLine.price}"/>-->
+<!--				</td>-->
+<!--				<td th:text="${productLine.brand}" />-->
+<!--				<td th:text="${productLine.price}" />-->
+<!--				<td>-->
+<!--					<select name="productId">-->
+<!--			    		<option th:each="i : ${products}" th:value="${i.id}" th:text="${i.size} + ', (' + ${i.inStockAmount} + ' left)'">-->
+<!--						</option>-->
+<!--					</select>-->
+<!--				</td>-->
+<!--				<td>-->
+<!--					<input type="number" name="amount" value="0"/>-->
+<!--				</td>-->
+<!--				<td>-->
+<!--					<input type="submit" value="Buy"/>-->
+<!--				</td>-->
+<!--			</tr>-->
+<!--		</table>-->
+<!--		<br/>-->
+<!--		<a href="shopHome">Back</a> to shop-->
+<!--	</form>-->
+	<div class="form-container">
+		<div class="header">
+			<h2 th:text="${productLine.name}"></h2>
+		</div>
+
+		<form th:action="buy_product" method="post">
+<!--			<div class="form-group row">-->
+<!--				<label for="brand" class="col-sm-2 col-form-label">Brand</label>-->
+<!--				<div class="col-sm-10">-->
+<!--					<input type="text" class="form-control" id="brand" name="brand" th:value="${productLine.brand}}" readonly>-->
+<!--				</div>-->
+<!--			</div>-->
+			<div class="form-group row">
+				<label for="price" class="col-sm-2 col-form-label">Brand</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="brand" name="brand" th:value="${productLine.brand}" readonly>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="price" class="col-sm-2 col-form-label">Price</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="price" name="price" th:value="${productLine.price}" readonly>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="size" class="col-sm-2 col-form-label">Size</label>
+				<div class="col-sm-10">
+					<select class="form-control" id="size" name="productId">
+						<option th:each="size : ${products}" th:value="${size.id}" th:text="${size.size}">Size Option</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="amount" class="col-sm-2 col-form-label">Quantity</label>
+				<div class="col-sm-10">
+					<input type="number" class="form-control" id="amount" name="amount" value="0" min="1" placeholder="Enter quantity">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-12 btn-container">
+					<button type="submit" class="btn btn-primary btn-buy">Buy</button>
+				</div>
+			</div>
+		</form>
+
+		<div class="back-link">
+			<a href="shopHome" class="btn btn-secondary">Back to Shop</a>
+		</div>
+<!--	</div>-->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
