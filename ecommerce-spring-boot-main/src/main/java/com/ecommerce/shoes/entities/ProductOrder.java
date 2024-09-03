@@ -1,7 +1,12 @@
 package com.ecommerce.shoes.entities;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+@Data
+@NoArgsConstructor
 @Entity
 public class ProductOrder {
 
@@ -33,10 +38,6 @@ public class ProductOrder {
 	@OneToOne(fetch=FetchType.EAGER, mappedBy="productOrder",cascade = CascadeType.ALL)
 	private OrderPayment payment;
 
-	public ProductOrder() {
-		super();
-	}
-
 	public ProductOrder(int amount, float price, float subtotal, float shipping, float tax, float total, Product product) {
 		super();
 		this.amount = amount;
@@ -47,71 +48,4 @@ public class ProductOrder {
 		this.total = total;
 		this.product = product;
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
-	public float getPrice() {
-		return price;
-	}
-
-	public void setPrice(float price) {
-		this.price = price;
-	}
-
-	public float getSubtotal() {
-		return subtotal;
-	}
-
-	public void setSubtotal(float subtotal) {
-		this.subtotal = subtotal;
-	}
-
-	public float getShipping() {
-		return shipping;
-	}
-
-	public void setShipping(float shipping) {
-		this.shipping = shipping;
-	}
-
-	public float getTax() {
-		return tax;
-	}
-
-	public void setTax(float tax) {
-		this.tax = tax;
-	}
-
-	public float getTotal() {
-		return total;
-	}
-
-	public void setTotal(float total) {
-		this.total = total;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", amount=" + amount + ", subtotal=" + subtotal + ", shipping=" + shipping + ", tax="
-				+ tax + ", total=" + total + ", product=" + product + "]";
-	}
-	
 }

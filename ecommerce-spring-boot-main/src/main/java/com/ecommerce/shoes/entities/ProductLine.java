@@ -1,10 +1,16 @@
 package com.ecommerce.shoes.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class ProductLine {
 	
@@ -27,63 +33,5 @@ public class ProductLine {
 	
 	@OneToMany(mappedBy="productLine" /*, fetch=FetchType.EAGER*/,cascade = CascadeType.ALL)
 	private List<Product> products = new ArrayList<>();
-
-	public ProductLine() {
-		super();
-	}
-
-	public ProductLine(String name, ProductCategory category, String brand, float price) {
-		super();
-		this.name = name;
-		this.category = category;
-		this.brand = brand;
-		this.price = price;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public ProductCategory getCategory() {
-		return category;
-	}
-
-	public void setCategory(ProductCategory category) {
-		this.category = category;
-	}
-
-	public String getBrand() {
-		return brand;
-	}
-
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
-
-	public float getPrice() {
-		return price;
-	}
-
-	public void setPrice(float price) {
-		this.price = price;
-	}
-
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	@Override
-	public String toString() {
-		return "ProductLine [id=" + id + ", name=" + name + ", category=" + category + ", brand=" + brand + ", price="
-				+ price + "]";
-	}
 	
 }
