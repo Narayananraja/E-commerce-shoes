@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>${title}</title>
+  <style>
+    body {
+        margin: 20px;
+    }
+    .form-container {
+        max-width: 600px;
+        margin: auto;
+    }
+  </style>
+</head>
+<body>
+<header class="bg-primary text-white py-6">
+  <div class="container text-center">
+    <h1 class="display-4">Footwear Fusion</h1>
+  </div>
+</header>
+<div class="container form-container">
+  <h1 th:text="${title}">Edit User</h1>
+  <form action="saveUser" method="post">
+    <input type="hidden" id="userId" name="id" th:value="${user.id}" />
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" id="username" name="username" th:value="${user.username}" required />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" name="password" th:value="${user.password}" />
+    </div>
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" class="form-control" id="firstName" name="firstName" th:value="${user.firstName}" required />
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" class="form-control" id="lastName" name="lastName" th:value="${user.lastName}" required />
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" th:text="${actionText}">Save</button>
+      <a href="/userList" class="btn btn-secondary">Back to User List</a>
+    </div>
+  </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

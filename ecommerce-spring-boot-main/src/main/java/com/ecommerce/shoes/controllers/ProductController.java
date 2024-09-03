@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.ecommerce.shoes.entities.ProductLine;
+import com.ecommerce.shoes.entities.ProductSizes;
+import com.ecommerce.shoes.services.ProductLineService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +15,16 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ecommerce.shoes.entities.Product;
 import com.ecommerce.shoes.entities.ProductCategory;
 import com.ecommerce.shoes.services.ProductService;
-
+import javax.validation.Valid;
 @Controller
 public class ProductController {
 	
@@ -27,6 +32,9 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+
+	@Autowired
+	private ProductLineService productLineService;
 	
 	@PostMapping(path="/buy_product", consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public String addProductToCart(@RequestParam MultiValueMap<String, String> userInfo, Model model) {
@@ -106,5 +114,89 @@ public class ProductController {
 
 		model.addAttribute("message", "Loading products failed");
         return "adminError";
+	}
+
+//	@GetMapping(path="/editProduct")
+//	public String showEditProductPage(@RequestParam("id") Long id, Model model) {
+//		Product product = productService.getProductById(id);
+//		model.addAttribute("product", product);
+//		return "editProduct";
+//	}
+//	@PostMapping(path="/updateProduct")
+//	public String updateProduct(@ModelAttribute("product") @Valid Product product, BindingResult result) {
+//		if (result.hasErrors()) {
+//			return "editProduct"; // Return to the edit page with errors
+//		}
+//		productService.updateProduct(product);
+//		return "redirect:/all_products"; // Redirect to the product list
+//	}
+
+	@PostMapping(path="/deleteProduct")
+	public String deleteProduct(@RequestParam("id") Long id) {
+		productService.deleteProduct(id);
+		return "redirect:/all_products"; // Redirect to the product list
+	}
+
+//	@GetMapping(path="/addProduct")
+//	public String addProduct(Model model) {
+//		// Optionally, add data to the model if needed, e.g., ProductLines
+//		return "addProduct"; // Return the name of the HTML template for the add product page
+//	}
+
+	@GetMapping(path = "/editProduct")
+	public String showEditProductPage(@RequestParam("id") Long id, Model model) {
+		Product product = productService.findProductById(id);
+		List<ProductLine> productLines = productLineService.findAllProductLines();
+
+		model.addAttribute("product", product);
+		model.addAttribute("productLines", productLines);
+		model.addAttribute("sizes", ProductSizes.values());  // Pass the enum values
+
+		return "editProduct";
+	}
+
+	@PostMapping(path = "/updateProduct")
+	public String updateProduct(@ModelAttribute Product product, @RequestParam("id") Long id) {
+//		productService.saveProduct(product);
+//		return "redirect:/all_products";
+		// Check if product exists
+		if (id != null) {
+			// Fetch the existing product
+			Product existingProduct = productService.findProductById(id);
+			if (existingProduct != null) {
+				// Update the fields
+				existingProduct.setSize(product.getSize());
+				existingProduct.setInStockAmount(product.getInStockAmount());
+				existingProduct.setProductLine(product.getProductLine());
+
+				// Save the updated product
+				productService.saveProduct(existingProduct);
+			}
+		} else {
+			// This case should ideally not happen when updating
+			// But in case it does, handle by saving as a new product
+			productService.saveProduct(product);
+		}
+
+		return "redirect:/all_products"; //
+	}
+
+	@GetMapping(path = "/addProduct")
+	public String showAddProductForm(Model model) {
+		List<ProductLine> productLines = productLineService.getAllProductLines();
+
+		// Pass the enum values to the view
+		model.addAttribute("productSizes", ProductSizes.values());
+		model.addAttribute("productLines", productLines);
+		model.addAttribute("product", new Product());
+		return "addProduct";
+	}
+
+	@PostMapping("/saveProduct")
+	public String saveProduct(@ModelAttribute Product product, Long productLineId) {
+		ProductLine productLine = productLineService.getProductLineById(productLineId);
+		product.setProductLine(productLine);
+		productService.saveProduct(product);
+		return "redirect:/all_products";
 	}
 }

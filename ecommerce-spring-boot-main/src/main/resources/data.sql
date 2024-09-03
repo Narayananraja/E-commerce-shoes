@@ -15,7 +15,7 @@ values (10004, '+12433829229', 'timmytester@mail.com', 'Test Street 44', '4th Fl
 
 
 insert into user (id, contact_id, username, password, first_name, last_name)
-values (20000, 10000, 'admin', '123', 'Admin', 'Admin');
+values (20000, 10000, 'sinoj', '123', 'sinoj', 'sinoj');
 
 insert into user (id, contact_id, username, password, first_name, last_name)
 values (20001, 10001, 'siva', '123', 'siva', 'perumal');
